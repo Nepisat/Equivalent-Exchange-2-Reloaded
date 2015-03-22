@@ -1,5 +1,6 @@
 package nepisat.ee2.obj.gui.Container.Slots;
 
+import scala.collection.mutable.Stack;
 import nepisat.ee2.obj.tileentity.TileEntityRenseiban;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
@@ -25,6 +26,16 @@ public class SlotOut extends Slot
 		 this.inventory.setInventorySlotContents(this.getSlotIndex(), stack);
 	     //this.onSlotChanged();
 		return;
+	}
+	@Override
+	public ItemStack decrStackSize(int slot)
+	{
+		ItemStack stack = getStack().copy();
+		stack.stackSize = slot;
+		tile.removeEmc(stack);
+		
+		tile.checkForUpdates();
+		return stack;
 	}
 	@Override
 	public boolean canTakeStack(EntityPlayer player)

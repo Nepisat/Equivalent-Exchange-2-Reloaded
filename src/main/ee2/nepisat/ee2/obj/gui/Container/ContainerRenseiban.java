@@ -64,78 +64,18 @@ public class ContainerRenseiban extends Container {
 
 	}
 
-	@Override
 	public boolean canInteractWith(EntityPlayer var1) 
 	{
 		return true;
 	}
 	
-	//@Override
-	//public ItemStack transferStackInSlot(EntityPlayer player, int slotIndex)
-	//{
-		/*
-		Slot slot = this.getSlot(slotIndex);
-		
-		if (slot == null || !slot.getHasStack()) 
-		{
-			return null;
-		}
-		
-		ItemStack stack = slot.getStack();
-		ItemStack newStack = stack.copy();
-		
-		if (slotIndex <= 7)
-		{
-			return null;
-		}
-		else if (slotIndex >= 10 && slotIndex <= 25)
-		{	
-		//	int emc = BlockEMCMapper.loadEMC((BlockEMCMapper.is[newStack.itemID]));
-			
-			int stackSize = 0;
-			
-		//	while (tile.getStoredEmc() >= emc && stackSize < newStack.getMaxStackSize())
-			{
-			//	tile.removeEmc(emc);
-				//Utils.pushStackInInv(player.inventory, Utils.getNormalizedStack(newStack));
-				stackSize++;
-			}
-			
-			//tile.updateOutputs();
-		}
-		else if (slotIndex >= 26)
-		//{
-	//		int emc = BlockEMCMapper.loadEMC((BlockEMCMapper.is[stack.itemID]));
-			
-			//if (emc == 0)
-			//{
-			//	return null;
-			//}
-			
-			//while(!(stack.stackSize > 0))
-			//{
-		//		tile.emc+=1;
-		//		--stack.stackSize;
-			//}
-			
-			//tile.handleKnowledge(newStack);
-
-		//	if (stack.stackSize == 0)
-		//	{
-			//	slot.putStack(null);
-			//}
-		//}
-		
-		//return null;
-		 * */
-
-//	}
+	
 
 	@Override
 	public void onContainerClosed(EntityPlayer player)
 	{
 		super.onContainerClosed(player);
-		//tile.closeInventory();
+	//	tile.closeInventory();
 	}
 	
 	@Override

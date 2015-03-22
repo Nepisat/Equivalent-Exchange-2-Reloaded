@@ -1,9 +1,12 @@
 package nepisat.ee2.obj.tileentity;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import nepisat.ee2.EMC.BlockEMCMapper;
 import nepisat.ee2.obj.gui.GuiRenseiban;
+import nepisat.ee2.obj.gui.Container.ContainerUtil;
 import nepisat.ee2.obj.gui.Container.Slots.SlotOut;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -32,12 +35,17 @@ import cpw.mods.fml.relauncher.SideOnly;
  
 public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 	//燃焼時間
+	public static boolean WorldFlag;
+	private static final int LOCK_INDEX = 9;
+	private static final int[] MATTER_INDEXES = new int[] {12, 11, 13, 10, 14, 21, 15, 20, 16, 19, 17, 18};
+	private static final int[] FUEL_INDEXES = new int[] {22, 23, 24, 25};
 	 SlotOut so= new SlotOut(this, 1, 1, 1);
 	public int burnTime;
 	public static  int emc;
 	public int currentItemBurnTime;
 	private  final LinkedList<String> KIOKU = new LinkedList<String>();
 	//調理時間
+	private int maxemc=1073741824;
 	boolean InSlot=false;
 	public ItemStack bufis= new ItemStack(0,0,0);
 	public int cookTime;
@@ -86,11 +94,12 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
     }
    
     public void updateEntity(){
+    	WorldFlag = this.worldObj.isRemote;
     	if(!this.worldObj.isRemote){
     		if(sampleItemStacks[9] != null){
-    			if (sampleItemStacks[9].stackSize <= 1){
+    			if (sampleItemStacks[9].stackSize == 1){
 					emc += BlockEMCMapper.getEmc(sampleItemStacks[9]);
-				}else if(sampleItemStacks[9].stackSize <= 2){
+				}else{
 					emc += BlockEMCMapper.getEmc(sampleItemStacks[9])*sampleItemStacks[9].stackSize;
 				}
     			if(KIOKU.indexOf(String.valueOf(sampleItemStacks[9].itemID)) == -1){
@@ -100,7 +109,7 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 					  for (int i=10;i<22;i++){
 						  if(sampleItemStacks[i]==null){
 							 sampleItemStacks[i]=sampleItemStacks[9];
-							// sampleItemStacks[i].stackSize=1;
+							 sampleItemStacks[i].stackSize=1;
 							// matterItemStacks[1].stackSize=1;
 							 break;
 						  }
@@ -108,10 +117,12 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 					  
 					GuiRenseiban.learnFlag=100;
 				}else{
+					
 					GuiRenseiban.learnFlag=0;
 				}
     			this.sampleItemStacks[9] = this.sampleItemStacks[9].getItem().getContainerItemStack(this.sampleItemStacks[9]);
     		}
+    		
     	}
     	/*
 		if (!this.worldObj.isRemote)
@@ -156,14 +167,10 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
     }
 	public void checkForUpdates()
 	{
-		//int matterEmc = BlockEMCMapper.loadEMC(BlockEMCMapper.is[sampleItemStacks[matterslot[0]].itemID]);
-		//int fuelEmc = Utils.getEmcValue(sampleItemStacks[9]);
-		
-		//int maxEmc = matterEmc > fuelEmc ? matterEmc : fuelEmc;
-		
-	//	if (maxEmc > this.getStoredEmc())
-		{
-			//updateOutputs();
+		if (this.worldObj != null && !this.worldObj.isRemote){
+		if(emc==0){
+			sampleItemStacks[10]=null;
+		}
 		}
 	}
 	// スロット数
@@ -232,7 +239,14 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 			par2ItemStack.stackSize = this.getInventoryStackLimit();
 		}
 	}
- 
+	public void removeEmc(ItemStack stack)
+	{
+		if (this.worldObj != null && !this.worldObj.isRemote){
+		removeEmc(BlockEMCMapper.getEmc(stack));
+		}
+	}
+
+
 	// インベントリの名前
 	@Override
 	public String getInvName() {
@@ -300,5 +314,62 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 		// TODO 自動生成されたメソッド・スタブ
 		return emc;
 	}
+	public boolean hasMaxedEmc()
+	{
+		return emc >= maxemc;
+	}
+	public void addEmc(double amount)
+	{
+		emc += amount;
+		
+		if (emc > maxemc || emc < 0)
+		{
+			emc = maxemc;
+		}
+	}
+	public void removeEmc(double amount)
+	{
+		emc -= amount;
+		
+		if (emc < 0)
+		{
+			emc = 0;
+		}
+	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static LinkedList<ItemStack> getKnowledge(String username)
+	{
+
+		return new LinkedList<ItemStack>();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
