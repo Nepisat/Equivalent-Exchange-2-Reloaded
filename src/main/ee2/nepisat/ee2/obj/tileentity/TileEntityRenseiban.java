@@ -124,52 +124,15 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
     		}
     		
     	}
-    	/*
-		if (!this.worldObj.isRemote)
-		{
-			if (sampleItemStacks[9] != null ){
-				for (int i = 0; i<173; i++){
-					if (sampleItemStacks[9].itemID == BlockEMCMapper.is[i].itemID){
-						if (sampleItemStacks[9].stackSize <= 1){
-							emc += BlockEMCMapper.loadEMC(BlockEMCMapper.is[i]);
-						}else if(sampleItemStacks[9].stackSize <= 2){
-							emc +=BlockEMCMapper.loadEMC(BlockEMCMapper.is[i])*sampleItemStacks[9].stackSize;
-						}
-						if(KIOKU.indexOf(String.valueOf(sampleItemStacks[9].itemID)) == -1){
-							KIOKU.add(String.valueOf(sampleItemStacks[9].itemID));
-							
-							//10~21=matter
-							  for (i=10;i<22;i++){
-								  if(sampleItemStacks[i]==null){
-									 sampleItemStacks[i]=BlockEMCMapper.is[sampleItemStacks[9].itemID];
-									// sampleItemStacks[i].stackSize=1;
-									// matterItemStacks[1].stackSize=1;
-									 break;
-								  }
-							  }
-							  
-							GuiRenseiban.learnFlag=100;
-						}else{
-							GuiRenseiban.learnFlag=0;
-						}
-						
-					}else{
-						emc += 0;
-					}
-				}
-				this.sampleItemStacks[9] = this.sampleItemStacks[9].getItem().getContainerItemStack(this.sampleItemStacks[9]);
-			}
-			
-			
-		
-		}
-		*/
     }
 	public void checkForUpdates()
 	{
 		if (this.worldObj != null && !this.worldObj.isRemote){
 		if(emc==0){
-			sampleItemStacks[10]=null;
+			for(int i=10;i<22;i++){
+				sampleItemStacks[i]=null;
+			}
+		}else{
 		}
 		}
 	}
