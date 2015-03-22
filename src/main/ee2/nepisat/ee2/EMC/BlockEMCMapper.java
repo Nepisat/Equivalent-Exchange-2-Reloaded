@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import java.util.Map.Entry;
 public class BlockEMCMapper {
-	/*Project-E‚ğƒpk...Ql‚É‚µ‚Ü‚µ‚½B
+	/*Project-Eã‚’ãƒ‘k...å‚è€ƒã«ã—ã¾ã—ãŸã€‚
 	 * 
 	 */
 	
@@ -131,9 +131,7 @@ public class BlockEMCMapper {
 	}
 	public static void setEMC(ItemStack stack, int value)
 	{
-		  stack.setTagCompound(new NBTTagCompound());
-		  NBTTagCompound tag = stack.getTagCompound();
-		setEMC(new EMCStacks(stack), value);
+		  setEMC(new EMCStacks(stack), value);
 	}
 	private static void setEMC(EMCStacks stack, int value)
 	{

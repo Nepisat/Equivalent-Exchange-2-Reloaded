@@ -13,17 +13,15 @@ public class ToolTipEvent {
 		
     	ItemStack stack = event.itemStack;
     	if(!stack.hasTagCompound()){
-					
+    		if(BlockEMCMapper.getEmc(stack)!=0){
 						if(stack.stackSize <= 1){
 							event.toolTip.add(EnumChatFormatting.GREEN + "EMC: "+EnumChatFormatting.WHITE+(BlockEMCMapper.getEmc(stack)));
 						}else{
 							event.toolTip.add(EnumChatFormatting.GREEN + "EMC: "+EnumChatFormatting.WHITE+BlockEMCMapper.getEmc(stack));
-							event.toolTip.add(EnumChatFormatting.YELLOW + "スタックEMC: "+EnumChatFormatting.WHITE+BlockEMCMapper.getEmc(stack)*stack.stackSize);
+							event.toolTip.add(EnumChatFormatting.YELLOW + "繧ｹ繧ｿ繝�繧ｯEMC: "+EnumChatFormatting.WHITE+BlockEMCMapper.getEmc(stack)*stack.stackSize);
 						}
-						
-					
 				}
 			}
-    	
+		}
 		
 }

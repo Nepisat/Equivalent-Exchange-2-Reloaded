@@ -17,8 +17,8 @@ public class GuiRenseiban extends GuiContainer {
 
 	public static int learnFlag=0;
 	private TileEntityRenseiban tileentity;
-	//ResourceLocation‚Ì‘æˆêˆø”‚ğ•t‚¯‘«‚µ‚ÄƒhƒƒCƒ“‚ğw’è‚·‚é‚±‚Æ‚à‚Å‚«‚é
-	//—á:new ResourceLocation("sample", "textures/gui/container/furnace.png")
+	//ResourceLocationã®ç¬¬ä¸€å¼•æ•°ã‚’ä»˜ã‘è¶³ã—ã¦ãƒ‰ãƒ¡ã‚¤ãƒ³ã‚’æŒ‡å®šã™ã‚‹ã“ã¨ã‚‚ã§ãã‚‹
+	//ä¾‹:new ResourceLocation("sample", "textures/gui/container/furnace.png")
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ee2","textures/gui/transmute.png");
 
 	public GuiRenseiban(EntityPlayer player, TileEntityRenseiban par2TileEntity) {
@@ -32,7 +32,7 @@ public class GuiRenseiban extends GuiContainer {
 	public void drawGuiContainerForegroundLayer(int par1, int par2)
 	{
 	
-		this.fontRenderer.drawString("˜B¬”Å", 6, 8, 4210752);
+		this.fontRenderer.drawString("éŒ¬æˆç‰ˆ", 6, 8, 4210752);
 		String emc = String.format("EMC: %,d", (int) tileentity.getStoredEmc());
 		this.fontRenderer.drawString(emc, 6, this.ySize - 94, 4210752);
 		if (learnFlag > 0)
@@ -57,7 +57,7 @@ public class GuiRenseiban extends GuiContainer {
 	{
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		//ƒeƒNƒXƒ`ƒƒ‚Ìw’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æŒ‡å®š
 		this.mc.getTextureManager().bindTexture(GUITEXTURE);
 
 		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);

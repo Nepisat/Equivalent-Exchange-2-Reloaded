@@ -31,13 +31,13 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
  
 public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
-	//”RÄŠÔ
+	//ç‡ƒç„¼æ™‚é–“
 	 SlotOut so= new SlotOut(this, 1, 1, 1);
 	public int burnTime;
 	public static  int emc;
 	public int currentItemBurnTime;
 	private  final LinkedList<String> KIOKU = new LinkedList<String>();
-	//’²—ŠÔ
+	//èª¿ç†æ™‚é–“
 	boolean InSlot=false;
 	public ItemStack bufis= new ItemStack(0,0,0);
 	public int cookTime;
@@ -57,8 +57,8 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 	public void readFromNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.readFromNBT(par1NBTTagCompound);
-		//”RÄŠÔ‚â’²—ŠÔ‚È‚Ç‚Ì“Ç‚İ‚İ
-		this.emc = par1NBTTagCompound.getInteger("strEMC");
+		//ç‡ƒç„¼æ™‚é–“ã‚„èª¿ç†æ™‚é–“ãªã©ã®èª­ã¿è¾¼ã¿
+		//this.emc = par1NBTTagCompound.getInteger("strEMC");
  
 	}
  
@@ -67,8 +67,8 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 	{
 		super.writeToNBT(par1NBTTagCompound);
  
-		//”RÄŠÔ‚â’²—ŠÔ‚È‚Ç‚Ì‘‚«‚İ
-		par1NBTTagCompound.setInteger("strEMC",emc);
+		//ç‡ƒç„¼æ™‚é–“ã‚„èª¿ç†æ™‚é–“ãªã©ã®æ›¸ãè¾¼ã¿
+		//par1NBTTagCompound.setInteger("strEMC",emc);
 		
  
 	}
@@ -86,6 +86,33 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
     }
    
     public void updateEntity(){
+    	if(!this.worldObj.isRemote){
+    		if(sampleItemStacks[9] != null){
+    			if (sampleItemStacks[9].stackSize <= 1){
+					emc += BlockEMCMapper.getEmc(sampleItemStacks[9]);
+				}else if(sampleItemStacks[9].stackSize <= 2){
+					emc += BlockEMCMapper.getEmc(sampleItemStacks[9])*sampleItemStacks[9].stackSize;
+				}
+    			if(KIOKU.indexOf(String.valueOf(sampleItemStacks[9].itemID)) == -1){
+					KIOKU.add(String.valueOf(sampleItemStacks[9].itemID));
+					
+					//10~21=matter
+					  for (int i=10;i<22;i++){
+						  if(sampleItemStacks[i]==null){
+							 sampleItemStacks[i]=sampleItemStacks[9];
+							// sampleItemStacks[i].stackSize=1;
+							// matterItemStacks[1].stackSize=1;
+							 break;
+						  }
+					  }
+					  
+					GuiRenseiban.learnFlag=100;
+				}else{
+					GuiRenseiban.learnFlag=0;
+				}
+    			this.sampleItemStacks[9] = this.sampleItemStacks[9].getItem().getContainerItemStack(this.sampleItemStacks[9]);
+    		}
+    	}
     	/*
 		if (!this.worldObj.isRemote)
 		{
@@ -139,13 +166,13 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 			//updateOutputs();
 		}
 	}
-	// ƒXƒƒbƒg”
+	// ã‚¹ãƒ­ãƒƒãƒˆæ•°
 	@Override
 	public int getSizeInventory() {
 		return this.sampleItemStacks.length;
 	}
  
-	// ƒCƒ“ƒxƒ“ƒgƒŠ“à‚Ì”CˆÓ‚ÌƒXƒƒbƒg‚É‚ ‚éƒAƒCƒeƒ€‚ğæ“¾
+	// ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªå†…ã®ä»»æ„ã®ã‚¹ãƒ­ãƒƒãƒˆã«ã‚ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã‚’å–å¾—
 	@Override
 	public ItemStack getStackInSlot(int par1) {
 		return this.sampleItemStacks[par1];
@@ -195,7 +222,7 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 		}
 	}
  
-	// ƒCƒ“ƒxƒ“ƒgƒŠ“à‚ÌƒXƒƒbƒg‚ÉƒAƒCƒeƒ€‚ğ“ü‚ê‚é
+	// ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªå†…ã®ã‚¹ãƒ­ãƒƒãƒˆã«ã‚¢ã‚¤ãƒ†ãƒ ã‚’å…¥ã‚Œã‚‹
 	@Override
 	public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
 		this.sampleItemStacks[par1] = par2ItemStack;
@@ -206,19 +233,19 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 		}
 	}
  
-	// ƒCƒ“ƒxƒ“ƒgƒŠ‚Ì–¼‘O
+	// ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã®åå‰
 	@Override
 	public String getInvName() {
 		return "Sample";
 	}
  
-	// ‘½Œ¾Œê‘Î‰‚©‚Ç‚¤‚©
+	// å¤šè¨€èªå¯¾å¿œã‹ã©ã†ã‹
 	@Override
 	public boolean isInvNameLocalized() {
 		return false;
 	}
  
-	// ƒCƒ“ƒxƒ“ƒgƒŠ“à‚ÌƒXƒ^ƒbƒNŒÀŠE’l
+	// ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªå†…ã®ã‚¹ã‚¿ãƒƒã‚¯é™ç•Œå€¤
 	@Override
 	public int getInventoryStackLimit() {
 		return 64;
@@ -229,7 +256,7 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 	       
 	}
  
-	// par1EntityPlayer‚ªTileEntity‚ğg‚¦‚é‚©‚Ç‚¤‚©
+	// par1EntityPlayerãŒTileEntityã‚’ä½¿ãˆã‚‹ã‹ã©ã†ã‹
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
 		return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D) <= 64.0D;
@@ -246,19 +273,19 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 	//	return par1 == 2 ? false : (par1 == 1 ? this.isItemFuel(par2ItemStack) : true);
 	//}
  
-	//ƒzƒbƒp[‚ÉƒAƒCƒeƒ€‚Ìó‚¯“n‚µ‚ğ‚·‚éÛ‚Ì—Dæ“x
+	//ãƒ›ãƒƒãƒ‘ãƒ¼ã«ã‚¢ã‚¤ãƒ†ãƒ ã®å—ã‘æ¸¡ã—ã‚’ã™ã‚‹éš›ã®å„ªå…ˆåº¦
 	@Override
 	public int[] getAccessibleSlotsFromSide(int par1) {
 		return par1 == 0 ? slots_bottom : (par1 == 1 ? slots_top : slots_sides);
 	}
  
-	//ƒzƒbƒp[‚©‚çƒAƒCƒeƒ€‚ğ“ü‚ê‚ç‚ê‚é‚©‚Ç‚¤‚©
+	//ãƒ›ãƒƒãƒ‘ãƒ¼ã‹ã‚‰ã‚¢ã‚¤ãƒ†ãƒ ã‚’å…¥ã‚Œã‚‰ã‚Œã‚‹ã‹ã©ã†ã‹
 	@Override
 	public boolean canInsertItem(int par1, ItemStack par2ItemStack, int par3) {
 		return this.isItemValidForSlot(par1, par2ItemStack);
 	}
  
-	//—×Ú‚·‚éƒzƒbƒp[‚ÉƒAƒCƒeƒ€‚ğ‘—‚ê‚é‚©‚Ç‚¤‚©
+	//éš£æ¥ã™ã‚‹ãƒ›ãƒƒãƒ‘ãƒ¼ã«ã‚¢ã‚¤ãƒ†ãƒ ã‚’é€ã‚Œã‚‹ã‹ã©ã†ã‹
 	@Override
 	public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3) {
 		return par3 != 0 || par1 != 1 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
@@ -270,7 +297,7 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 	}
 
 	public int getStoredEmc() {
-		// TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+		// TODO è‡ªå‹•ç”Ÿæˆã•ã‚ŒãŸãƒ¡ã‚½ãƒƒãƒ‰ãƒ»ã‚¹ã‚¿ãƒ–
 		return emc;
 	}
 

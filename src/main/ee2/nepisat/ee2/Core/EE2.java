@@ -48,14 +48,13 @@ public class EE2 {
      public void init(FMLInitializationEvent event){
 		logger.setParent(FMLLog.getLogger());
     	 LanguageRegistry.addName(BlockRenseiban, "Transmutation");
-    	 LanguageRegistry.instance().addNameForObject(BlockRenseiban, "ja_JP", "˜B¬”Å");
+    	 LanguageRegistry.instance().addNameForObject(BlockRenseiban, "ja_JP", "éŒ¬æˆç‰ˆ");
     	 LanguageRegistry.addName(Kenzyanoisi, "Philosopher's Stone");
-    	 LanguageRegistry.instance().addNameForObject(Kenzyanoisi, "ja_JP", "Œ«Ò‚ÌÎ");
+    	 LanguageRegistry.instance().addNameForObject(Kenzyanoisi, "ja_JP", "è³¢è€…ã®çŸ³");
          GameRegistry.registerTileEntity(TileEntityRenseiban.class, "TileEntityRenseiban");
-         System.out.println("[EE2Rel]Start EMCMapping");
+         System.out.println("[EE2Rel]Starting EMCMap");
          BlockEMCMapper.EMCMap();
-         System.out.println("[EE2REL]"+BlockEMCMapper.getEmc(Block.stone));
-         System.out.println("[EE2Rel]Finish EMCMapped");
+         System.out.println("[EE2Rel]Finish EMCMap");
          NetworkRegistry.instance().registerGuiHandler(instance, new GuiHandlerRenseiban());
          MinecraftForge.EVENT_BUS.register(new ToolTipEvent());
          KeyBinding[] key = {new KeyBinding("Name of Button", Keyboard.KEY_G)};

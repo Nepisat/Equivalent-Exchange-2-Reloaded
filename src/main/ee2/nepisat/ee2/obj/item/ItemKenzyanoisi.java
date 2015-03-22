@@ -19,28 +19,28 @@ import net.minecraft.world.World;
 		public ItemKenzyanoisi(int par1)
 		{
 			super(par1);
-			this.setCreativeTab(EE2.CreativeTabEE2);	//ƒNƒŠƒGƒCƒeƒBƒu‚Ìƒ^ƒu
-			this.setUnlocalizedName("Kenzyanoisi");	//ƒVƒXƒeƒ€–¼‚Ì“o˜^
-			this.setTextureName("ee2:kenzyanoisi");	//ƒeƒNƒXƒ`ƒƒ‚Ìw’è
-			this.setMaxStackSize(1);	//ƒXƒ^ƒbƒN‚Å‚«‚é—Ê
+			this.setCreativeTab(EE2.CreativeTabEE2);	//ã‚¯ãƒªã‚¨ã‚¤ãƒ†ã‚£ãƒ–ã®ã‚¿ãƒ–
+			this.setUnlocalizedName("Kenzyanoisi");	//ã‚·ã‚¹ãƒ†ãƒ åã®ç™»éŒ²
+			this.setTextureName("ee2:kenzyanoisi");	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æŒ‡å®š
+			this.setMaxStackSize(1);	//ã‚¹ã‚¿ãƒƒã‚¯ã§ãã‚‹é‡
 		}
 	 
 		/*
-		 * ˆÈ‰º‚¨‚Ü‚¯
-		 * “Á‚É‹@”\‚ª‚È‚¯‚ê‚ÎÁ‚µ‚Ä‚­‚¾‚³‚¢
+		 * ä»¥ä¸‹ãŠã¾ã‘
+		 * ç‰¹ã«æ©Ÿèƒ½ãŒãªã‘ã‚Œã°æ¶ˆã—ã¦ãã ã•ã„
 		 */
 	 
 		@Override
 		public boolean onItemUse(ItemStack item, EntityPlayer player, World world, int x, int y, int z, int side, float disX, float disY, float disZ)
 		{
-			//ƒAƒCƒeƒ€‚ğƒuƒƒbƒN‚É‘Î‚µ‚Ä‰EƒNƒŠƒbƒN‚µ‚½‚ÉŒÄ‚Î‚ê‚é
+			//ã‚¢ã‚¤ãƒ†ãƒ ã‚’ãƒ–ãƒ­ãƒƒã‚¯ã«å¯¾ã—ã¦å³ã‚¯ãƒªãƒƒã‚¯ã—ãŸæ™‚ã«å‘¼ã°ã‚Œã‚‹
 			return false;
 		}
 	 
 		@Override
 		public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player)
 		{
-			//ƒAƒCƒeƒ€‚ğ‰EƒNƒŠƒbƒN‚ÉŒÄ‚Î‚ê‚é
+			//ã‚¢ã‚¤ãƒ†ãƒ ã‚’å³ã‚¯ãƒªãƒƒã‚¯æ™‚ã«å‘¼ã°ã‚Œã‚‹
 			return item;
 		}
 	

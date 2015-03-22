@@ -37,7 +37,7 @@ public class BlockRenseiban extends BlockContainer {
 	{
 	   return false;
 	}
-	//‰EƒNƒŠƒbƒN‚³‚ê‚½‚Ìˆ—
+	//å³ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸæ™‚ã®å‡¦ç†
 	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9){
 		if (par1World.isRemote)
@@ -46,7 +46,7 @@ public class BlockRenseiban extends BlockContainer {
 		}
 		else
 		{
-			// GUI‚ğŠJ‚­
+			// GUIã‚’é–‹ã
 			par5EntityPlayer.openGui(EE2.instance, EE2.instance.RenseibanGuiID, par1World, par2, par3, par4);
 			return true;
 		}
@@ -55,7 +55,7 @@ public class BlockRenseiban extends BlockContainer {
 
 	@Override
 	public TileEntity createNewTileEntity(World world) {
-		// TileEntity‚Ì¶¬
+		// TileEntityã®ç”Ÿæˆ
 		return new TileEntityRenseiban();
 	}
 	@Override

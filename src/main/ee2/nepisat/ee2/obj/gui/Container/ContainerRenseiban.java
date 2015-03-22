@@ -25,7 +25,7 @@ public class ContainerRenseiban extends Container {
 	public ContainerRenseiban(EntityPlayer player,TileEntityRenseiban par2TileEntity) {
 		this.tile = par2TileEntity;
 
-		// InventorySample‚Å’Ç‰Á‚·‚éƒCƒ“ƒxƒ“ƒgƒŠ
+		// InventorySampleã§è¿½åŠ ã™ã‚‹ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒª
 		this.addSlotToContainer(new Slot(this.tile, 0, 43, 23));
 		this.addSlotToContainer(new Slot(this.tile, 1, 34, 41));
 		this.addSlotToContainer(new Slot(this.tile, 2, 52, 41));
@@ -53,7 +53,7 @@ public class ContainerRenseiban extends Container {
 		this.addSlotToContainer(new SlotOut(this.tile, 24, 177, 50));
 		this.addSlotToContainer(new SlotOut(this.tile, 25, 158, 69));
 
-		// 1 ` 3’i–Ú‚ÌƒCƒ“ƒxƒ“ƒgƒŠ
+		// 1 ï½ 3æ®µç›®ã®ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒª
 		for(int i = 0; i < 3; i++)
 			for(int j = 0; j < 9; j++)
 				this.addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, 35 + j * 18, 117 + i * 18));
