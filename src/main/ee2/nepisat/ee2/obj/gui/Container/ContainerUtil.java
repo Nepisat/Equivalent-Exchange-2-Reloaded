@@ -1,5 +1,7 @@
 package nepisat.ee2.obj.gui.Container;
 
+import nepisat.ee2.EMC.BlockEMCMapper;
+import nepisat.ee2.EMC.EMCStacks;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -15,7 +17,28 @@ public class ContainerUtil {
 	{
 		return ItemStack.areItemStacksEqual(getNormalizedStack(stack1), getNormalizedStack(stack2));
 	}
-	
+	public static boolean doesItemHaveEmc(ItemStack stack)
+	{
+		if (stack == null) 
+		{
+			return false;
+		}
+		
+		
+		EMCStacks iStack = new EMCStacks(stack);
+
+		if (!iStack.isValid())
+		{
+			return false;
+		}
+
+		if (!stack.getHasSubtypes() && stack.getMaxDamage() != 0)
+		{
+			iStack.damage = 0;
+		}
+
+		return BlockEMCMapper.mapContains(iStack);
+	}
 	public static ItemStack pushStackInInv(IInventory inv, ItemStack stack)
 	{
 		int limit;

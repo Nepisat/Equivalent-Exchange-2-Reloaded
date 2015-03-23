@@ -1,6 +1,7 @@
 package nepisat.ee2.obj.gui.Container;
 
 import nepisat.ee2.EMC.BlockEMCMapper;
+import nepisat.ee2.obj.gui.Container.Slots.SlotIn;
 import nepisat.ee2.obj.gui.Container.Slots.SlotOut;
 import nepisat.ee2.obj.tileentity.TileEntityRenseiban;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +36,7 @@ public class ContainerRenseiban extends Container {
 		this.addSlotToContainer(new Slot(this.tile, 6, 52, 59));
 		this.addSlotToContainer(new Slot(this.tile, 7, 43, 77));
 		this.addSlotToContainer(new Slot(this.tile, 8, 158, 50));
-		this.addSlotToContainer(new Slot(this.tile, 9, 107, 97));//
+		this.addSlotToContainer(new SlotIn(this.tile, 9, 107, 97));//
 		this.addSlotToContainer(new SlotOut(this.tile, 10, 123, 30));
 		this.addSlotToContainer(new SlotOut(this.tile, 11, 140, 13));
 		this.addSlotToContainer(new SlotOut(this.tile, 12, 158, 9));

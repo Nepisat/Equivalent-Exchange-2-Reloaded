@@ -33,7 +33,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
  
-public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
+public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 	//燃焼時間
 	public static boolean WorldFlag;
 	private static final int LOCK_INDEX = 9;
@@ -41,11 +41,9 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 	private static final int[] FUEL_INDEXES = new int[] {22, 23, 24, 25};
 	 SlotOut so= new SlotOut(this, 1, 1, 1);
 	public int burnTime;
-	public static  int emc;
 	public int currentItemBurnTime;
 	private  final LinkedList<String> KIOKU = new LinkedList<String>();
 	//調理時間
-	private int maxemc=1073741824;
 	boolean InSlot=false;
 	public ItemStack bufis= new ItemStack(0,0,0);
 	public int cookTime;
@@ -94,13 +92,24 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
     }
    
     public void updateEntity(){
-    	WorldFlag = this.worldObj.isRemote;
+    	//Update();
+    }
+	public void checkForUpdates()
+	{
+		if (this.worldObj != null && !this.worldObj.isRemote){
+		if(getemc()<=1){
+			Update();
+		}
+		}
+	}
+	public void Update() {
+		WorldFlag = this.worldObj.isRemote;
     	if(!this.worldObj.isRemote){
     		if(sampleItemStacks[9] != null){
     			if (sampleItemStacks[9].stackSize == 1){
-					emc += BlockEMCMapper.getEmc(sampleItemStacks[9]);
+    				addEmc(BlockEMCMapper.getEmc(sampleItemStacks[9]));
 				}else{
-					emc += BlockEMCMapper.getEmc(sampleItemStacks[9])*sampleItemStacks[9].stackSize;
+					addEmc(BlockEMCMapper.getEmc(sampleItemStacks[9])*sampleItemStacks[9].stackSize);
 				}
     			if(KIOKU.indexOf(String.valueOf(sampleItemStacks[9].itemID)) == -1){
 					KIOKU.add(String.valueOf(sampleItemStacks[9].itemID));
@@ -124,18 +133,8 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
     		}
     		
     	}
-    }
-	public void checkForUpdates()
-	{
-		if (this.worldObj != null && !this.worldObj.isRemote){
-		if(emc==0){
-			for(int i=10;i<22;i++){
-				sampleItemStacks[i]=null;
-			}
-		}else{
-		}
-		}
 	}
+
 	// スロット数
 	@Override
 	public int getSizeInventory() {
@@ -273,32 +272,7 @@ public class TileEntityRenseiban  extends TileEntity implements ISidedInventory{
 		return false;
 	}
 
-	public int getStoredEmc() {
-		// TODO 自動生成されたメソッド・スタブ
-		return emc;
-	}
-	public boolean hasMaxedEmc()
-	{
-		return emc >= maxemc;
-	}
-	public void addEmc(double amount)
-	{
-		emc += amount;
-		
-		if (emc > maxemc || emc < 0)
-		{
-			emc = maxemc;
-		}
-	}
-	public void removeEmc(double amount)
-	{
-		emc -= amount;
-		
-		if (emc < 0)
-		{
-			emc = 0;
-		}
-	}
+
 
 	
 	

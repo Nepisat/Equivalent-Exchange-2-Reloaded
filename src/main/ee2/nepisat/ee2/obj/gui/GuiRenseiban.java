@@ -14,7 +14,7 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public class GuiRenseiban extends GuiContainer {
-
+	private int maxemc=1073741824;
 	public static int learnFlag=0;
 	private TileEntityRenseiban tileentity;
 	//ResourceLocationの第一引数を付け足してドメインを指定することもできる
