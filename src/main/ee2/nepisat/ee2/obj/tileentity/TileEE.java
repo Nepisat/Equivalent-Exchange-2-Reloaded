@@ -20,20 +20,24 @@ public class TileEE extends TileEntity{
 	}
 	public void addEmc(double amount)
 	{
+		if (this.worldObj != null && !this.worldObj.isRemote){
 		emc += amount;
 		
 		if (emc > maxemc || emc < 0)
 		{
 			emc = maxemc;
 		}
+		}
 	}
 	public void addEmc(int amount)
 	{
+		if (this.worldObj != null && !this.worldObj.isRemote){
 		emc += amount;
 		
 		if (emc > maxemc || emc < 0)
 		{
 			emc = maxemc;
+		}
 		}
 	}
 	public void removeEmc(double amount)

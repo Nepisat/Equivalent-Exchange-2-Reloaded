@@ -1,5 +1,6 @@
 package nepisat.ee2.obj.gui.Container.Slots;
 
+import nepisat.ee2.EMC.BlockEMCMapper;
 import nepisat.ee2.obj.gui.Container.ContainerUtil;
 import nepisat.ee2.obj.tileentity.TileEntityRenseiban;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,38 +30,16 @@ public class SlotIn extends Slot{
 		{
 			return;
 		}
-		
-		super.putStack(stack);
-		tile.Update();
-		/*
-		if (stack.getItem() == ObjHandler.kleinStars)
-		{
-			int remainEmc = tile.maxemc()() - (int) Math.ceil(tile.getStoredEmc());
-			
-			if (ItemPE.getEmc(stack) >= remainEmc)
-			{
-				tile.addEmcWithPKT(remainEmc);
-				ItemPE.removeEmc(stack, remainEmc);
+			if (stack.stackSize == 1){
+				tile.addEmc(BlockEMCMapper.getEmc(stack));
+			}else{
+				tile.addEmc(BlockEMCMapper.getEmc(stack)*stack.stackSize);
 			}
-			else
-			{
-				tile.addEmcWithPKT(ItemPE.getEmc(stack));
-				ItemPE.setEmc(stack, 0);
-			}
-			
-			tile.handleKnowledge(stack.copy());
+			tile.KIOKU(stack);
+			tile.Update();
 			return;
-		}
 		
-		if (stack.getItem() != ObjHandler.tome)
-		{
-			tile.handleKnowledge(stack.copy());
-		}
-		else
-		{
-			tile.updateOutputs();
-		}
-		*/
+		
 	}
 	
 	@Override
@@ -74,6 +53,6 @@ public class SlotIn extends Slot{
 	@Override
 	public int getSlotStackLimit()
 	{
-		return 1;
+		return 64;
 	}
 }

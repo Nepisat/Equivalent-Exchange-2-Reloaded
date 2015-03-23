@@ -34,28 +34,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
  
 public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
-	//燃焼時間
 	public static boolean WorldFlag;
 	private static final int LOCK_INDEX = 9;
 	private static final int[] MATTER_INDEXES = new int[] {12, 11, 13, 10, 14, 21, 15, 20, 16, 19, 17, 18};
 	private static final int[] FUEL_INDEXES = new int[] {22, 23, 24, 25};
-	 SlotOut so= new SlotOut(this, 1, 1, 1);
-	public int burnTime;
-	public int currentItemBurnTime;
 	private  final LinkedList<String> KIOKU = new LinkedList<String>();
-	//調理時間
-	boolean InSlot=false;
-	public ItemStack bufis= new ItemStack(0,0,0);
-	public int cookTime;
-	private static final int[] slots_top = new int[] {0};
-	private static final int[] slots_bottom = new int[] {2, 1};
-	private static final int[] slots_sides = new int[] {1};
-	int j;
-    boolean stackin;
 	public ItemStack[] sampleItemStacks = new ItemStack[26];
-	private static final int[] matterslot = new int[] {12, 11, 13, 10, 14, 21, 15, 20, 16, 19, 17, 18};
-	private ItemStack[] matterstack = new ItemStack[26];
-	private boolean matter=false;;
 	private EntityPlayer player;
 	private TileEntityRenseiban par2TileEntity;
  
@@ -63,7 +47,6 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 	public void readFromNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.readFromNBT(par1NBTTagCompound);
-		//燃焼時間や調理時間などの読み込み
 		//this.emc = par1NBTTagCompound.getInteger("strEMC");
  
 	}
@@ -73,7 +56,6 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 	{
 		super.writeToNBT(par1NBTTagCompound);
  
-		//燃焼時間や調理時間などの書き込み
 		//par1NBTTagCompound.setInteger("strEMC",emc);
 		
  
@@ -102,37 +84,31 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 		}
 		}
 	}
+	public void KIOKU(ItemStack stack){
+		if(KIOKU.indexOf(String.valueOf(stack.itemID)) == -1){
+			KIOKU.add(String.valueOf(stack.itemID));
+			
+			//10~21=matter
+			  for (int i=10;i<22;i++){
+				  if(sampleItemStacks[i]==null){
+					 sampleItemStacks[i]=stack;
+					 sampleItemStacks[i].stackSize=1;
+					// matterItemStacks[1].stackSize=1;
+					 break;
+				  }
+			  }
+			  
+			GuiRenseiban.learnFlag=100;
+		}else{
+			
+			GuiRenseiban.learnFlag=0;
+		}
+		return;
+	}
 	public void Update() {
-		WorldFlag = this.worldObj.isRemote;
-    	if(!this.worldObj.isRemote){
-    		if(sampleItemStacks[9] != null){
-    			if (sampleItemStacks[9].stackSize == 1){
-    				addEmc(BlockEMCMapper.getEmc(sampleItemStacks[9]));
-				}else{
-					addEmc(BlockEMCMapper.getEmc(sampleItemStacks[9])*sampleItemStacks[9].stackSize);
-				}
-    			if(KIOKU.indexOf(String.valueOf(sampleItemStacks[9].itemID)) == -1){
-					KIOKU.add(String.valueOf(sampleItemStacks[9].itemID));
-					
-					//10~21=matter
-					  for (int i=10;i<22;i++){
-						  if(sampleItemStacks[i]==null){
-							 sampleItemStacks[i]=sampleItemStacks[9];
-							 sampleItemStacks[i].stackSize=1;
-							// matterItemStacks[1].stackSize=1;
-							 break;
-						  }
-					  }
-					  
-					GuiRenseiban.learnFlag=100;
-				}else{
-					
-					GuiRenseiban.learnFlag=0;
-				}
-    			this.sampleItemStacks[9] = this.sampleItemStacks[9].getItem().getContainerItemStack(this.sampleItemStacks[9]);
-    		}
-    		
-    	}
+
+			this.sampleItemStacks[9]=null;
+    			//this.sampleItemStacks[9] = this.sampleItemStacks[9].getItem().getContainerItemStack(this.sampleItemStacks[9]);
 	}
 
 	// スロット数
@@ -212,7 +188,7 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 	// インベントリの名前
 	@Override
 	public String getInvName() {
-		return "Sample";
+		return "Renseiban";
 	}
  
 	// 多言語対応かどうか
@@ -250,10 +226,10 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 	//}
  
 	//ホッパーにアイテムの受け渡しをする際の優先度
-	@Override
-	public int[] getAccessibleSlotsFromSide(int par1) {
-		return par1 == 0 ? slots_bottom : (par1 == 1 ? slots_top : slots_sides);
-	}
+	//@Override
+	//public int[] getAccessibleSlotsFromSide(int par1) {
+	//	return par1 == 0 ? slots_bottom : (par1 == 1 ? slots_top : slots_sides);
+	//}
  
 	//ホッパーからアイテムを入れられるかどうか
 	@Override
@@ -287,6 +263,12 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 	{
 
 		return new LinkedList<ItemStack>();
+	}
+
+	@Override
+	public int[] getAccessibleSlotsFromSide(int var1) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
 	}
 	
 	

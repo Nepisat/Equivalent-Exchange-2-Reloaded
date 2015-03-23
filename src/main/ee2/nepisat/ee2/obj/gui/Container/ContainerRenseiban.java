@@ -70,7 +70,84 @@ public class ContainerRenseiban extends Container {
 		return true;
 	}
 	
-	
+	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+	{
+		ItemStack itemstack = null;
+		Slot slot = (Slot)this.inventorySlots.get(par2);
+		if (slot != null && slot.getHasStack())
+		{
+			ItemStack itemstack1 = slot.getStack();
+			itemstack = itemstack1.copy();
+ 
+			//スロット番号が2の時
+			if (par2>=11&&par2<=21)
+			{
+				//アイテムの移動(スロット3～39へ)
+				if (!this.mergeItemStack(itemstack1, 3, 39, true))
+				{
+					return null;
+				}
+ 
+				slot.onSlotChange(itemstack1, itemstack);
+			}
+			//スロット番号が0、1でない時
+			else if (par2 != 1 && par2 != 0)
+			{
+				if (FurnaceRecipes.smelting().getSmeltingResult(itemstack1) != null)
+				{
+					//アイテムの移動(スロット0～1へ)
+					if (!this.mergeItemStack(itemstack1, 0, 1, false))
+					{
+						return null;
+					}
+				}
+				else if (TileEntityFurnace.isItemFuel(itemstack1))
+				{
+					//アイテムの移動(スロット1～2へ)
+					if (!this.mergeItemStack(itemstack1, 1, 2, false))
+					{
+						return null;
+					}
+				}
+				else if (par2 >= 3 && par2 < 30)
+				{
+					//アイテムの移動(スロット30～39へ)
+					if (!this.mergeItemStack(itemstack1, 30, 39, false))
+					{
+						return null;
+					}
+				}
+				else if (par2 >= 30 && par2 < 39 && !this.mergeItemStack(itemstack1, 3, 30, false))
+				{
+					return null;
+				}
+			}
+			//アイテムの移動(スロット3～39へ)
+			else if (!this.mergeItemStack(itemstack1, 3, 39, false))
+			{
+				return null;
+			}
+ 
+			if (itemstack1.stackSize == 0)
+			{
+				slot.putStack((ItemStack)null);
+			}
+			else
+			{
+				slot.onSlotChanged();
+			}
+ 
+			if (itemstack1.stackSize == itemstack.stackSize)
+			{
+				return null;
+			}
+ 
+			slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
+		}
+ 
+		return itemstack;
+	}
+ 
 
 	@Override
 	public void onContainerClosed(EntityPlayer player)
