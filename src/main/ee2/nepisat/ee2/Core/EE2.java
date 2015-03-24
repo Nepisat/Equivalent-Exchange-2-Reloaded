@@ -1,6 +1,7 @@
 package nepisat.ee2.Core;
 
 import java.util.logging.Logger;
+
 import nepisat.ee2.EMC.BlockEMCMapper;
 
 import org.lwjgl.input.Keyboard;
@@ -17,6 +18,7 @@ import nepisat.ee2.obj.block.BlockRenseiban;
 
 
 import nepisat.ee2.obj.gui.GuiHandlerRenseiban;
+import nepisat.ee2.obj.item.ItemGreenDust;
 import nepisat.ee2.obj.item.ItemKenzyanoisi;
 import nepisat.ee2.obj.tileentity.TileEntityRenseiban;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
@@ -37,6 +39,8 @@ public class EE2 {
 	public static CreativeTabs CreativeTabEE2=new CreativeTabEE2R("EE2R");;
 	public static Block BlockRenseiban;
 	public static Item Kenzyanoisi;
+	public static Item greendust;
+	public static int greendustid = 28521;
 	public static int KenzyanoisiID=28520;
 	public static int RenseibanID = 4087;
 	public static int RenseibanGuiID=1000;
@@ -51,10 +55,12 @@ public class EE2 {
     	 LanguageRegistry.instance().addNameForObject(BlockRenseiban, "ja_JP", "錬成版");
     	 LanguageRegistry.addName(Kenzyanoisi, "Philosopher's Stone");
     	 LanguageRegistry.instance().addNameForObject(Kenzyanoisi, "ja_JP", "賢者の石");
+    	 LanguageRegistry.addName(greendust, "Covalence Dust");
+    	 LanguageRegistry.instance().addNameForObject(greendust, "ja_JP", "共有結合粉(Low)");
          GameRegistry.registerTileEntity(TileEntityRenseiban.class, "TileEntityRenseiban");
-         System.out.println("[EE2Rel]Starting EMCMap");
+        logger.info("Starting EMCMap");
          BlockEMCMapper.EMCMap();
-         System.out.println("[EE2Rel]Finish EMCMap");
+        logger.info("Finish EMCMap");
          NetworkRegistry.instance().registerGuiHandler(instance, new GuiHandlerRenseiban());
          MinecraftForge.EVENT_BUS.register(new ToolTipEvent());
          KeyBinding[] key = {new KeyBinding("Name of Button", Keyboard.KEY_G)};
@@ -69,8 +75,10 @@ public class EE2 {
 	public void preinit(FMLPreInitializationEvent event){
 		BlockRenseiban = new BlockRenseiban(RenseibanID,Material.rock);
 		Kenzyanoisi=new ItemKenzyanoisi(KenzyanoisiID);
+		greendust = new ItemGreenDust(greendustid);
 		GameRegistry.registerBlock(BlockRenseiban, "Renseiban");
 		GameRegistry.registerItem(Kenzyanoisi, "KEnzyanoisi");
+		GameRegistry.registerItem(greendust,"GreenDust");
 		 instance = this;
 	}
 }

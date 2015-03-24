@@ -46,7 +46,10 @@ public class EMCStacks
 	{
 		return new EMCStacks(id, qnty, damage);
 	}
-
+	public EMCStacks copysize()
+	{
+		return new EMCStacks(id, qnty,1);
+	}
 	@Override
 	public int hashCode() 
 	{

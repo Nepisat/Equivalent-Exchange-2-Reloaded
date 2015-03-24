@@ -13,7 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 	 
-	public class ItemKenzyanoisi extends Item
+	public class ItemKenzyanoisi extends ItemEE
 	{
 	 
 		public ItemKenzyanoisi(int par1)

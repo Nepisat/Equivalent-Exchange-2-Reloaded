@@ -48,6 +48,9 @@ public class TileEE extends TileEntity{
 		removeEmc(BlockEMCMapper.getEmc(stack));
 		}
 	}
+	public void setEMC(int e){
+		emc=e;
+	}
 	public void removeEmc(double amount)
 	{
 		emc -= amount;

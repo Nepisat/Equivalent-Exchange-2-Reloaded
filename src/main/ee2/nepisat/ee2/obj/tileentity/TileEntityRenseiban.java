@@ -40,7 +40,7 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 	private static final int[] MATTER_INDEXES = new int[] {12, 11, 13, 10, 14, 21, 15, 20, 16, 19, 17, 18};
 	private static final int[] FUEL_INDEXES = new int[] {22, 23, 24, 25};
 	private  final LinkedList<EMCStacks> KIOKU = new LinkedList<EMCStacks>();
-	private  final LinkedList<ItemStack> KIOKU2 = new LinkedList<ItemStack>();
+	private  final LinkedList<EMCStacks> KIOKU2 = new LinkedList<EMCStacks>();
 	public ItemStack[] sampleItemStacks = new ItemStack[26];
 	private EntityPlayer player;
 	private TileEntityRenseiban par2TileEntity;
@@ -78,30 +78,36 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
    
 	public void checkForUpdates()
 	{
-		if (this.worldObj != null && !this.worldObj.isRemote){
+		if (this.worldObj != null){
 			if(getemc()<=0){
 				 for (int i=10;i<22;i++){
 					sampleItemStacks[i]=null;
 				}
+				KIOKU.clear();
 			}
 		}
 	}
 	public void KIOKU(EMCStacks stack){
-		EMCStacks copy = stack.copy();
-		if(KIOKU.indexOf(stack) == -1){
+		if (this.worldObj != null){
+		EMCStacks copy = stack.copysize();
+		if(KIOKU.indexOf(copy) == -1){
 			KIOKU.add(copy);
-			  for (int i=10;i<22;i++){
-				  if(sampleItemStacks[i]==null){
-					 sampleItemStacks[i]=es.IteminEMC(stack);
-					 sampleItemStacks[i].stackSize=1;
-					 break;
-				  }
-			  }
+			for(int i=10;i<22;i++){
+				if(sampleItemStacks[i]==null){
+					setInventorySlotContents(i,es.IteminEMC(copy));
+					sampleItemStacks[i].stackSize=1;
+					onInventoryChanged();
+					break;
+				}
+			}
+		}if(KIOKU2.indexOf(copy)== -1){
 			GuiRenseiban.learnFlag=100;
 		}else{
 			GuiRenseiban.learnFlag=0;
 		}
+		KIOKU2.add(copy);
 		return;
+		}
 	}
 	public void Update() {
 		if(sampleItemStacks[9]!=null){
@@ -197,7 +203,16 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
  
 	@Override
 	public void onInventoryChanged() {
-	       
+		 if (this.worldObj != null)
+	        {
+	            this.blockMetadata = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
+	            this.worldObj.markTileEntityChunkModified(this.xCoord, this.yCoord, this.zCoord, this);
+
+	            if (this.getBlockType() != null)
+	            {
+	                this.worldObj.func_96440_m(this.xCoord, this.yCoord, this.zCoord, this.getBlockType().blockID);
+	            }
+	        }
 	}
  
 	// par1EntityPlayerがTileEntityを使えるかどうか
@@ -210,7 +225,10 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 	public void openChest() {}
  
 	@Override
-	public void closeChest() {}
+	public void closeChest() {
+		setEMC(0);
+	}
+
  
 	//@Override
 	//public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack) {
