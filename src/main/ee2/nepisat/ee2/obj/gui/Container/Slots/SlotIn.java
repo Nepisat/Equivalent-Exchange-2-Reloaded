@@ -1,6 +1,7 @@
 package nepisat.ee2.obj.gui.Container.Slots;
 
 import nepisat.ee2.EMC.BlockEMCMapper;
+import nepisat.ee2.EMC.EMCStacks;
 import nepisat.ee2.obj.gui.Container.ContainerUtil;
 import nepisat.ee2.obj.tileentity.TileEntityRenseiban;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,7 +11,7 @@ import net.minecraft.item.ItemStack;
 public class SlotIn extends Slot{
 
 	private TileEntityRenseiban tile;
-	
+	private EMCStacks es = new EMCStacks(0,0,0);
 	public SlotIn(TileEntityRenseiban tile, int par2, int par3, int par4) 
 	{
 		super(tile, par2, par3, par4);
@@ -35,7 +36,7 @@ public class SlotIn extends Slot{
 			}else{
 				tile.addEmc(BlockEMCMapper.getEmc(stack)*stack.stackSize);
 			}
-			tile.KIOKU(stack);
+			tile.KIOKU(es.EMCinItem(stack));
 			tile.Update();
 			return;
 		

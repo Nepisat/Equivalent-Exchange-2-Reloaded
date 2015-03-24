@@ -1,5 +1,7 @@
 package nepisat.ee2.obj.tileentity;
 
+import nepisat.ee2.EMC.BlockEMCMapper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEE extends TileEntity{
@@ -38,6 +40,12 @@ public class TileEE extends TileEntity{
 		{
 			emc = maxemc;
 		}
+		}
+	}
+	public void removeEmc(ItemStack stack)
+	{
+		if (this.worldObj != null && !this.worldObj.isRemote){
+		removeEmc(BlockEMCMapper.getEmc(stack));
 		}
 	}
 	public void removeEmc(double amount)

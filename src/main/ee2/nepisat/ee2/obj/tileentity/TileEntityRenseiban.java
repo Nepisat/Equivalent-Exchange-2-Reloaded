@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import nepisat.ee2.EMC.BlockEMCMapper;
+import nepisat.ee2.EMC.EMCStacks;
 import nepisat.ee2.obj.gui.GuiRenseiban;
 import nepisat.ee2.obj.gui.Container.ContainerUtil;
 import nepisat.ee2.obj.gui.Container.Slots.SlotOut;
@@ -34,14 +35,16 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
  
 public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
-	public static boolean WorldFlag;
+	public static boolean kioku=false;;
 	private static final int LOCK_INDEX = 9;
 	private static final int[] MATTER_INDEXES = new int[] {12, 11, 13, 10, 14, 21, 15, 20, 16, 19, 17, 18};
 	private static final int[] FUEL_INDEXES = new int[] {22, 23, 24, 25};
-	private  final LinkedList<String> KIOKU = new LinkedList<String>();
+	private  final LinkedList<EMCStacks> KIOKU = new LinkedList<EMCStacks>();
+	private  final LinkedList<ItemStack> KIOKU2 = new LinkedList<ItemStack>();
 	public ItemStack[] sampleItemStacks = new ItemStack[26];
 	private EntityPlayer player;
 	private TileEntityRenseiban par2TileEntity;
+	private EMCStacks es = new EMCStacks(0,0,0);
  
 	@Override
 	public void readFromNBT(NBTTagCompound par1NBTTagCompound)
@@ -73,42 +76,37 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
         this.readFromNBT(pkt.data);
     }
    
-    public void updateEntity(){
-    	//Update();
-    }
 	public void checkForUpdates()
 	{
 		if (this.worldObj != null && !this.worldObj.isRemote){
-		if(getemc()<=1){
-			Update();
-		}
+			if(getemc()<=0){
+				 for (int i=10;i<22;i++){
+					sampleItemStacks[i]=null;
+				}
+			}
 		}
 	}
-	public void KIOKU(ItemStack stack){
-		if(KIOKU.indexOf(String.valueOf(stack.itemID)) == -1){
-			KIOKU.add(String.valueOf(stack.itemID));
-			
-			//10~21=matter
+	public void KIOKU(EMCStacks stack){
+		EMCStacks copy = stack.copy();
+		if(KIOKU.indexOf(stack) == -1){
+			KIOKU.add(copy);
 			  for (int i=10;i<22;i++){
 				  if(sampleItemStacks[i]==null){
-					 sampleItemStacks[i]=stack;
+					 sampleItemStacks[i]=es.IteminEMC(stack);
 					 sampleItemStacks[i].stackSize=1;
-					// matterItemStacks[1].stackSize=1;
 					 break;
 				  }
 			  }
-			  
 			GuiRenseiban.learnFlag=100;
 		}else{
-			
 			GuiRenseiban.learnFlag=0;
 		}
 		return;
 	}
 	public void Update() {
-
-			this.sampleItemStacks[9]=null;
-    			//this.sampleItemStacks[9] = this.sampleItemStacks[9].getItem().getContainerItemStack(this.sampleItemStacks[9]);
+		if(sampleItemStacks[9]!=null){
+    			sampleItemStacks[9] = null;
+		}
 	}
 
 	// スロット数
@@ -177,12 +175,6 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 			par2ItemStack.stackSize = this.getInventoryStackLimit();
 		}
 	}
-	public void removeEmc(ItemStack stack)
-	{
-		if (this.worldObj != null && !this.worldObj.isRemote){
-		removeEmc(BlockEMCMapper.getEmc(stack));
-		}
-	}
 
 
 	// インベントリの名前
@@ -247,18 +239,6 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return false;
 	}
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public static LinkedList<ItemStack> getKnowledge(String username)
 	{
 
@@ -270,25 +250,4 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

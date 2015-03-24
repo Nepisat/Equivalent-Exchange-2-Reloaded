@@ -16,7 +16,6 @@ public class EMCStacks
 		this.qnty = qnty;
 		this.damage = damage;
 	}
-	
 	public EMCStacks(ItemStack stack)
 	{
 		if (stack == null)
@@ -30,7 +29,12 @@ public class EMCStacks
 			qnty = stack.stackSize;
 		}
 	}
-
+    public EMCStacks EMCinItem(ItemStack i){
+    	return new EMCStacks(i.itemID,i.getItemDamage(),i.stackSize);
+    }
+    public ItemStack IteminEMC(EMCStacks i){
+    	return new ItemStack(i.id,i.damage,i.qnty);
+    }
 	public boolean isValid()
 	{
 		return id != -1;
