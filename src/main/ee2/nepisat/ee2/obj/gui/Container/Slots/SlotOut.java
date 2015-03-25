@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 
 public class SlotOut extends Slot
 {
+	public ItemStack stackl;
 	private TileEntityRenseiban tile;
 	
 	public SlotOut(TileEntityRenseiban tile, int par2, int par3, int par4) 
@@ -23,6 +24,7 @@ public class SlotOut extends Slot
 	@Override
 	public void putStack(ItemStack stack)
 	{
+		//減少
 		 this.inventory.setInventorySlotContents(this.getSlotIndex(), stack);
 	     //this.onSlotChanged();
 		return;
@@ -30,18 +32,15 @@ public class SlotOut extends Slot
 	@Override
 	public ItemStack decrStackSize(int slot)
 	{
+		
+		//if(tile.worldObj!=null && !tile.worldObj.isRemote){
 		ItemStack stack = getStack().copy();
-		stack.stackSize = slot;
+		stack.stackSize=slot;
+		tile.checkForUpdates();
 		tile.removeEmc(stack);
-		 if(tile.getemc()<=1){
-				for (int i=10;i<22;i++){
-					tile.sampleItemStacks[i]=null;
-				}
-				tile.removeEmc(stack);
-				tile.KIOKU.clear();
-			}
-		//tile.checkForUpdates();
 		return stack;
+	
+
 	}
 	@Override
 	public boolean canTakeStack(EntityPlayer player)

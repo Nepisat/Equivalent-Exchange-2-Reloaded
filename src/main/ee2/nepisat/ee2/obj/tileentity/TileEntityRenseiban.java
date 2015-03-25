@@ -30,12 +30,14 @@ import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
  
 public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
-	public static boolean kioku=false;;
+	public static boolean kioku=false;
+	public  World WorldObj;
 	private static final int LOCK_INDEX = 9;
 	private static final int[] MATTER_INDEXES = new int[] {12, 11, 13, 10, 14, 21, 15, 20, 16, 19, 17, 18};
 	private static final int[] FUEL_INDEXES = new int[] {22, 23, 24, 25};
@@ -77,12 +79,19 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
     }
    
 	public void checkForUpdates()
-	{
-		//if (this.worldObj != null){
-		//}
+	{	
+	//	if (this.worldObj !=null){
+			KIOKU.clear();
+			if(getemc()<=1){
+				for (int i=10;i<22;i++){
+					sampleItemStacks[i]=null;
+				}
+				System.out.println("update " +sampleItemStacks[10]);
+			//}
+		}
 	}
 	public void KIOKU(EMCStacks stack){
-		if (this.worldObj != null){
+	//	if (this.worldObj != null){
 		EMCStacks copy = stack.copysize();
 		if(KIOKU.indexOf(copy) == -1){
 			KIOKU.add(copy);
@@ -101,14 +110,14 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 		}
 		KIOKU2.add(copy);
 		return;
-		}
+		//}
 	}
 	public void Update() {
 		if(sampleItemStacks[9]!=null){
     			sampleItemStacks[9] = null;
 		}
 	}
-
+	
 	// スロット数
 	@Override
 	public int getSizeInventory() {
