@@ -39,7 +39,7 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
 	private static final int LOCK_INDEX = 9;
 	private static final int[] MATTER_INDEXES = new int[] {12, 11, 13, 10, 14, 21, 15, 20, 16, 19, 17, 18};
 	private static final int[] FUEL_INDEXES = new int[] {22, 23, 24, 25};
-	private  final LinkedList<EMCStacks> KIOKU = new LinkedList<EMCStacks>();
+	public final LinkedList<EMCStacks> KIOKU = new LinkedList<EMCStacks>();
 	private  final LinkedList<EMCStacks> KIOKU2 = new LinkedList<EMCStacks>();
 	public ItemStack[] sampleItemStacks = new ItemStack[26];
 	private EntityPlayer player;
@@ -78,14 +78,8 @@ public class TileEntityRenseiban  extends TileEE implements ISidedInventory{
    
 	public void checkForUpdates()
 	{
-		if (this.worldObj != null){
-			if(getemc()<=0){
-				 for (int i=10;i<22;i++){
-					sampleItemStacks[i]=null;
-				}
-				KIOKU.clear();
-			}
-		}
+		//if (this.worldObj != null){
+		//}
 	}
 	public void KIOKU(EMCStacks stack){
 		if (this.worldObj != null){

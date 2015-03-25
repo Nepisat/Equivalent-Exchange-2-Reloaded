@@ -33,7 +33,14 @@ public class SlotOut extends Slot
 		ItemStack stack = getStack().copy();
 		stack.stackSize = slot;
 		tile.removeEmc(stack);
-		tile.checkForUpdates();
+		 if(tile.getemc()<=1){
+				for (int i=10;i<22;i++){
+					tile.sampleItemStacks[i]=null;
+				}
+				tile.removeEmc(stack);
+				tile.KIOKU.clear();
+			}
+		//tile.checkForUpdates();
 		return stack;
 	}
 	@Override
